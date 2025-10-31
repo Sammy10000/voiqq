@@ -10,7 +10,7 @@ import {
   LinearProgress,
 } from "@mui/material";
 
-// Set PDF.js worker (CDN for simplicity)
+// Set PDF.js worker (CDN for MVP)
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
@@ -20,7 +20,7 @@ const PDFViewer: React.FC = () => {
   const navigate = useNavigate();
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
-  const [textContent, setTextContent] = useState(""); // For ARIA accessibility
+  const [textContent, setTextContent] = useState(""); // Extracted text for accessibility
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const PDFViewer: React.FC = () => {
           style={{ marginBottom: "20px", whiteSpace: "pre-wrap" }}
         >
           {textContent.substring(0, 500)}...{" "}
-          {/* Truncated for demo; full text for screen readers */}
+          {/* Truncated; full for screen readers */}
         </Typography>
         <Box
           sx={{
@@ -72,15 +72,16 @@ const PDFViewer: React.FC = () => {
           }}
         >
           <Typography>
-            PDF Page {pageNumber} Render Placeholder (Add Canvas for Full
-            Render)
+            PDF Page {pageNumber} Render Placeholder (Add Canvas for Full View)
           </Typography>
         </Box>
         <Box textAlign="center" mt={2}>
           <Button
-            onClick={clearPDF}
+            onClick={() => {
+              clearPDF();
+              navigate("/");
+            }}
             variant="outlined"
-            onClick={() => navigate("/")}
           >
             Back to Home
           </Button>
